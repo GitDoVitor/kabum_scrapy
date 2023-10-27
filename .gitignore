@@ -1,0 +1,16 @@
+# Arquivos de log do Scrapy
+*.log
+
+# Arquivos de cache do Scrapy
+.scrapy/
+__pycache__
+.vscode
+
+# Arquivos de configuração do Scrapy
+scrapy.cfg
+
+# Arquivos de dados do Scrapy
+*.jl
+*.json
+*.csv
+*.xml
