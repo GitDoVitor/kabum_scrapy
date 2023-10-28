@@ -1,14 +1,25 @@
+import arrow
 from itemadapter import ItemAdapter
+from scrapy.exporters import CsvItemExporter
+
 class KabumScrapyPipeline:
     def process_item(self, item, spider):
         return item
     
-class WriteCSV:
-    def open_spider(self, spider):
-        self.file = open('kabum.csv', 'w', encoding='utf-8')
-    def close_spider(self, spider):
-        self.file.close()
+class EmptyPipeline:
     def process_item(self, item, spider):
-        line = f'{item["name"]};{item["price"]};{item["url"]};{item["last_update"]}\n'
-        self.file.write(line)
+        adapter = ItemAdapter(item)
+
+        if adapter.get('price') is None:
+            adapter['price'] = '0'
+
+        if adapter.get('name') is None:
+            adapter['name'] = 'NA'
+
+        if adapter.get('url') is None:
+            adapter['url'] = 'NA'
+
+        if adapter.get('last_update') is None:
+            adapter['last_update'] = arrow.now().format('DD.MMM.YYYY')
+
         return item

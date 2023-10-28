@@ -6,12 +6,13 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import dotenv
+
 
 BOT_NAME = "kabum_scrapy"
 
 SPIDER_MODULES = ["kabum_scrapy.spiders"]
 NEWSPIDER_MODULE = "kabum_scrapy.spiders"
-
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "kabum_scrapy (+http://www.yourdomain.com)"
@@ -63,8 +64,8 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   "kabum_scrapy.pipelines.KabumScrapyPipeline": 300,
-    "kabum_scrapy.pipelines.WriteCSV": 400,
+   "kabum_scrapy.pipelines.KabumScrapyPipeline": 100,
+    "kabum_scrapy.pipelines.EmptyPipeline": 200,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -92,3 +93,10 @@ ITEM_PIPELINES = {
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+dotenv.load_dotenv()
+
+FEEDS = {
+    'scraping/feeds/%(name)s_%(time)s.csv': {'format': 'csv'},
+    's3://my-scrapy-bucket-feeds/scraping/feeds/%(name)s/%(name)s_%(time)s.csv': {'format': 'csv'},
+}

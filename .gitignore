@@ -8,6 +8,7 @@ __pycache__
 
 # Arquivos de configuração do Scrapy
 scrapy.cfg
+.env
 
 # Arquivos de dados do Scrapy
 *.jl
