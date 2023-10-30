@@ -96,7 +96,7 @@ FEED_EXPORT_ENCODING = "utf-8"
 
 dotenv.load_dotenv()
 
-FEEDS = {
-    'scraping/feeds/%(name)s_%(time)s.csv': {'format': 'csv'},
-    's3://my-scrapy-bucket-feeds/scraping/feeds/%(name)s/%(name)s_%(time)s.csv': {'format': 'csv'},
-}
+# FEEDS = {
+#     'scraping/feeds/%(name)s_%(time)s.csv': {'format': 'csv'},
+#     's3://my-scrapy-bucket-feeds/scraping/feeds/%(name)s/%(name)s_%(time)s.csv': {'format': 'csv'},
+# }

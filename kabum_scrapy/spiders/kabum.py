@@ -1,3 +1,4 @@
+from math import e
 import scrapy
 from scrapy.loader import ItemLoader
 import arrow
@@ -8,6 +9,19 @@ class KabumSpider(scrapy.Spider):
     name = "kabum"
     allowed_domains = ["www.kabum.com.br"]
     start_urls = ["https://www.kabum.com.br/computadores/monitores"]
+
+    custom_feed = {
+        'scraping/feeds/%(name)s_%(time)s.csv': {'format': 'csv'},
+    }
+
+    custom_settings = {
+        'LOG_LEVEL': 'INFO',
+    }
+    
+    @classmethod
+    def update_settings(cls, settings):
+        super().update_settings(settings)
+        settings.setdefault("FEEDS", {}).update(cls.custom_feed)
 
 
     def parse(self, response):
@@ -26,3 +40,5 @@ class KabumSpider(scrapy.Spider):
         print(next_page_url)
         if next_page_url is not None:
             yield response.follow(next_page_url, callback=self.parse)
+            
+            
