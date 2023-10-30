@@ -1,6 +1,5 @@
-from math import e
+from types import NoneType
 import scrapy
-from scrapy.loader import ItemLoader
 import arrow
 from kabum_scrapy.items import KabumScrapyItem
 from kabum_scrapy.itemloaders import KabumItemLoader
@@ -36,9 +35,11 @@ class KabumSpider(scrapy.Spider):
             kabum_item.add_value('last_update', arrow.now().format('DD.MMM.YYYY')),
             yield kabum_item.load_item()
 
-        next_page_url = base_url + response.css('[rel="next"] ::attr(href)').get().split('?')[1]
-        print(next_page_url)
-        if next_page_url is not None:
+        next_page = response.css('[rel="next"] ::attr(href)').get().split('?')[1]
+        if next_page is not NoneType:
+            next_page_url = base_url + next_page  
+            print(next_page_url)
             yield response.follow(next_page_url, callback=self.parse)
+      
             
             

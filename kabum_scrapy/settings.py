@@ -1,13 +1,6 @@
-# Scrapy settings for kabum_scrapy project
-#
-# For simplicity, this file contains only settings considered important or
-# commonly used. You can find more settings consulting the documentation:
-#
-#     https://docs.scrapy.org/en/latest/topics/settings.html
-#     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 import dotenv
 
+dotenv.load_dotenv()
 
 BOT_NAME = "kabum_scrapy"
 
@@ -51,9 +44,10 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
+DOWNLOADER_MIDDLEWARES = {
 #    "kabum_scrapy.middlewares.KabumScrapyDownloaderMiddleware": 543,
-#}
+    'kabum_scrapy.middlewares.ScrapeOpsFakeUserAgentMiddleware': 200,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -64,8 +58,8 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   "kabum_scrapy.pipelines.KabumScrapyPipeline": 100,
-    "kabum_scrapy.pipelines.EmptyPipeline": 200,
+    "kabum_scrapy.pipelines.EmptyItemPipeline": 0,
+   "kabum_scrapy.pipelines.KabumScrapyPipeline": 100, 
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -94,7 +88,8 @@ REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
-dotenv.load_dotenv()
+SCRAPEOPS_FAKE_USER_AGENT_ENABLED = True
+SCRAPEOPS_API_KEY = '9c947a07-a17a-44ff-899e-f72ffe5b80c3'
 
 # FEEDS = {
 #     'scraping/feeds/%(name)s_%(time)s.csv': {'format': 'csv'},
