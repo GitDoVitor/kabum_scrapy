@@ -1,6 +1,9 @@
-import dotenv
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
 
-dotenv.load_dotenv()
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 BOT_NAME = "kabum_scrapy"
 
@@ -89,7 +92,7 @@ TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
 SCRAPEOPS_FAKE_USER_AGENT_ENABLED = True
-SCRAPEOPS_API_KEY = '9c947a07-a17a-44ff-899e-f72ffe5b80c3'
+SCRAPEOPS_API_KEY = os.environ.get("SCRAPEOPS_API_KEY")
 
 # FEEDS = {
 #     'scraping/feeds/%(name)s_%(time)s.csv': {'format': 'csv'},
